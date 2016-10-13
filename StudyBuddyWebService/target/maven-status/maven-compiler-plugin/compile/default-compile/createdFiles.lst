@@ -1,0 +1,5 @@
+org\gis\studybuddy\model\User.class
+org\gis\studybuddy\dao\UserDAO.class
+org\gis\studybuddy\controller\UserController.class
+org\gis\studybuddy\service\UserService.class
+org\gis\studybuddy\mapper\UserMapper.class

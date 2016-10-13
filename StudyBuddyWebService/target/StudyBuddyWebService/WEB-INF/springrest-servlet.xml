@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+   <annotation-driven />
+   <resources mapping="/resources/**" location="/resources/" />
+   <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+      <beans:property name="driverClassName" value="org.postgresql.Driver" />
+      <beans:property name="url" value="jdbc:postgresql://studybuddyinstance.c88bc6n3vfko.us-west-2.rds.amazonaws.com:5432/StudyBuddy" />
+      <beans:property name="username" value="postgres" />
+      <beans:property name="password" value="nishant123" />
+   </beans:bean>
+   <beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+      <beans:property name="dataSource"  ref="dataSource" />    
+   </beans:bean>
+   <context:component-scan base-package="org.gis.studybuddy" /> 
+</beans:beans>
