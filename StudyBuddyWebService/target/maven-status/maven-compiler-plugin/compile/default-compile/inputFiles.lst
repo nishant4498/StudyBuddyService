@@ -1,5 +1,11 @@
-D:\workspace\git\StudyBuddyWebService\src\main\java\org\gis\studybuddy\mapper\UserMapper.java
-D:\workspace\git\StudyBuddyWebService\src\main\java\org\gis\studybuddy\controller\UserController.java
-D:\workspace\git\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\User.java
-D:\workspace\git\StudyBuddyWebService\src\main\java\org\gis\studybuddy\dao\UserDAO.java
-D:\workspace\git\StudyBuddyWebService\src\main\java\org\gis\studybuddy\service\UserService.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\Point.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\service\UserService.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\dao\GroupDAO.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\dao\UserDAO.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\mapper\GroupMapper.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\controller\UserController.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\Group.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\service\GroupService.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\User.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\mapper\UserMapper.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\controller\GroupController.java

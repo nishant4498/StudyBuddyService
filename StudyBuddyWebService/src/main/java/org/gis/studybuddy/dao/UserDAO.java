@@ -34,7 +34,7 @@ public class UserDAO {
 	}
 
 	public void updateUser(User user) {
-		
+		// TODO Not sure what needs to be updated for a user.
 	}
 
 	public void deleteUser(String id) {

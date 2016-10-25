@@ -1,5 +1,11 @@
+org\gis\studybuddy\dao\GroupDAO.class
+org\gis\studybuddy\mapper\GroupMapper.class
+org\gis\studybuddy\controller\GroupController.class
+org\gis\studybuddy\service\GroupService.class
+org\gis\studybuddy\service\UserService.class
+org\gis\studybuddy\model\Group.class
 org\gis\studybuddy\model\User.class
+org\gis\studybuddy\model\Point.class
 org\gis\studybuddy\dao\UserDAO.class
 org\gis\studybuddy\controller\UserController.class
-org\gis\studybuddy\service\UserService.class
 org\gis\studybuddy\mapper\UserMapper.class
