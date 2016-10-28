@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@SuppressWarnings("unused")
 @RestController
 public class GroupController {
 	@Autowired
@@ -33,24 +32,27 @@ public class GroupController {
 			@RequestParam(value = "endTimestamp", required = false) Long endTimestamp) {
 		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp);
 	}
+	
+	@RequestMapping(value = "/createGroup", method = RequestMethod.POST, headers = "Accept=application/json")
+	public void createGroup(@RequestBody Group group) {
+		groupService.createGroup(group);
+	}
+	
+	@RequestMapping(value = "/deleteGroup/{groupid}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public void deleteUser(@PathVariable("groupid") String id) {
+		groupService.deleteGroup(id);
+	}
 
 //	@RequestMapping(value = "/getUser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 //	public User getCountryById(@PathVariable("id") String id) {
 //		return groupService.getUser(id);
 //	}
 //
-//	@RequestMapping(value = "/addUser", method = RequestMethod.POST, headers = "Accept=application/json")
-//	public void addUser(@RequestBody User user) {
-//		groupService.addUser(user);
-//	}
 //
 //	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT, headers = "Accept=application/json")
 //	public void updateUser(@RequestBody User user) {
 //		groupService.updateUser(user);
 //	}
 //
-//	@RequestMapping(value = "/deleteUser/{userid}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-//	public void deleteUser(@PathVariable("userid") String id) {
-//		groupService.deleteUser(id);
-//	}
+
 }

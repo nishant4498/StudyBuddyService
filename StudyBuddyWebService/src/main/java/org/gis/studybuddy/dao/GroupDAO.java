@@ -15,14 +15,14 @@ public class GroupDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	public List<Group> getAllGroups() {
-		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
 		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
 		return groupList;
 	}
 	
 	
 	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
-		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
 		if(maxCapacity != null){
 			query += " where capacity <=" + maxCapacity;
 		}
@@ -35,6 +35,18 @@ public class GroupDAO {
 		return groupList;
 	}
 	
+	public Group createGroup(Group group) {
+		String query = "insert into public.group(subjectid, groupname, admin, starttime, endtime, capacity, nummembers, locationname, point,topic)";
+		query += "values (?, ?, ?, ?, ?, ?, ?, ?, ST_MakePoint(?, ?),?)";
+		jdbcTemplate.update(query,Integer.valueOf(group.subjectId),group.groupName, group.adminId, group.startTimestamp, group.endTimestamp, group.capacity, group.numMembers, group.locationName,group.longitude, group.latitude,group.topic);
+		return new Group();
+	}
+	
+	public void deleteGroup(String id) {
+		String query = "delete from public.group where groupid = " + "\'" + id + "\'";
+		jdbcTemplate.execute(query);
+	}
+	
 
 //	public User getUser(String id) {
 //		String query = "select * from public.user where userid = " + "\'" + id + "\'";
@@ -42,19 +54,9 @@ public class GroupDAO {
 //		return userList.get(0);
 //	}
 //
-//	public User addUser(User user) {
-//		String query = "insert into public.user (userid, name, passwordhash) values (?, ?, ?)";
-//		System.out.println(query);
-//		jdbcTemplate.update(query,user.getUserId() , user.getName(), user.getPassword());
-//		return new User();
-//	}
-//
 //	public void updateUser(User user) {
 //		// TODO Not sure what needs to be updated for a user.
 //	}
 //
-//	public void deleteUser(String id) {
-//		String query = "delete from public.user where userid = " + "\'" + id + "\'";
-//		jdbcTemplate.execute(query);
-//	}
+
 }

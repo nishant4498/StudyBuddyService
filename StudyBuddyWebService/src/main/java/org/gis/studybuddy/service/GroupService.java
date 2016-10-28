@@ -22,24 +22,28 @@ public class GroupService {
 	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
 		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp);
 	}
+	
+	@Transactional
+	public void createGroup(Group group) {
+		groupDao.createGroup(group);
+	}
+	
+	@Transactional
+	public void deleteGroup(String id) {
+		groupDao.deleteGroup(id);
+	}
 
 //	@Transactional
 //	public User getUser(String id) {
 //		return groupDao.getUser(id);
 //	}
 //
-//	@Transactional
-//	public void addUser(User user) {
-//		groupDao.addUser(user);
-//	}
+
 //
 //	@Transactional
 //	public void updateUser(User user) {
 //		groupDao.updateUser(user);
 //	}
 //
-//	@Transactional
-//	public void deleteUser(String id) {
-//		groupDao.deleteUser(id);
-//	}
+
 }

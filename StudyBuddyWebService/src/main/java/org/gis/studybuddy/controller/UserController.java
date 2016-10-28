@@ -29,7 +29,7 @@ public class UserController {
 		return userService.getUser(id);
 	}
 
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/signUp", method = RequestMethod.POST, headers = "Accept=application/json")
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);
 	}

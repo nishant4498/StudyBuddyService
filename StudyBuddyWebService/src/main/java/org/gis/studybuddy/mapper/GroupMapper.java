@@ -18,6 +18,7 @@ public class GroupMapper implements RowMapper<Group> {
 		group.numMembers = rs.getInt("nummembers");
 		group.startTimestamp = rs.getTimestamp("starttime");
 		group.endTimestamp = rs.getTimestamp("endtime");
+		group.topic = rs.getString("topic");
 		group.latitude = rs.getDouble("latCoord");
 		group.longitude = rs.getDouble("longCoord");
 		return group;

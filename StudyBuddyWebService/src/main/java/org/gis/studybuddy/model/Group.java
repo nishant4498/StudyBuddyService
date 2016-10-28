@@ -11,6 +11,7 @@ public class Group {
 	public Timestamp endTimestamp;
 	public int capacity;
 	public int numMembers;
+	public String topic;
 	public String locationName;
 	public double latitude;
 	public double longitude;
