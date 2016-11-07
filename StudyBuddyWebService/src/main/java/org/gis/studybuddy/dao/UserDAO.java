@@ -28,7 +28,6 @@ public class UserDAO {
 
 	public User addUser(User user) {
 		String query = "insert into public.user (userid, name, passwordhash) values (?, ?, ?)";
-		System.out.println(query);
 		jdbcTemplate.update(query,user.getUserId() , user.getName(), user.getPassword());
 		return new User();
 	}

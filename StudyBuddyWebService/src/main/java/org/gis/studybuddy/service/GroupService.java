@@ -33,11 +33,18 @@ public class GroupService {
 		groupDao.deleteGroup(id);
 	}
 
-//	@Transactional
-//	public User getUser(String id) {
-//		return groupDao.getUser(id);
-//	}
-//
+	@Transactional
+	public void joinGroup(Integer groupId, String userId) {
+		groupDao.joinGroup(groupId, userId);
+	}
+	
+	@Transactional
+	public List<Integer> getAllJoinedGroups(String userId) {
+		return groupDao.getAllJoinedGroups(userId);
+	}
+
+	
+	
 
 //
 //	@Transactional

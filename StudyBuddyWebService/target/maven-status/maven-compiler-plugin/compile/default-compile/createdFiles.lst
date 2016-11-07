@@ -1,5 +1,6 @@
 org\gis\studybuddy\dao\GroupDAO.class
 org\gis\studybuddy\controller\GroupController.class
+org\gis\studybuddy\mapper\IntegerMapper.class
 org\gis\studybuddy\service\UserService.class
 org\gis\studybuddy\service\CommonService.class
 org\gis\studybuddy\model\Group.class

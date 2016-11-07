@@ -11,6 +11,7 @@ D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\st
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\dao\CommonDAO.java
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\controller\CommonController.java
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\dao\UserDAO.java
+D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\mapper\IntegerMapper.java
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\Subject.java
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\service\GroupService.java
 D:\workspace\git\StudyBuddyService\StudyBuddyWebService\src\main\java\org\gis\studybuddy\model\User.java

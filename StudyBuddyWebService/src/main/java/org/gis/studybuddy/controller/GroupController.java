@@ -26,7 +26,8 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value = "/searchGroups", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Group> searchGroups(@RequestParam(value = "maxCapacity", required = false) int maxCapacity,
+	@ResponseBody
+	public List<Group> searchGroups(@RequestParam(value = "maxCapacity", required = false) Integer maxCapacity,
 			@RequestParam(value = "subjectId", required = false) Integer subjectID,
 			@RequestParam(value = "startTimestamp", required = false) Long startTimestamp,
 			@RequestParam(value = "endTimestamp", required = false) Long endTimestamp) {
@@ -38,21 +39,22 @@ public class GroupController {
 		groupService.createGroup(group);
 	}
 	
+	@RequestMapping(value = "/joinGroup", method = RequestMethod.GET, headers = "Accept=application/json")
+	public void joinGroup(@RequestParam(value = "groupId", required = false) Integer groupId,
+			@RequestParam(value = "userId", required = false) String userId) {
+		groupService.joinGroup(groupId, userId);
+	}
+	
 	@RequestMapping(value = "/deleteGroup/{groupid}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public void deleteUser(@PathVariable("groupid") String id) {
+	public void deleteGroup(@PathVariable("groupid") String id) {
 		groupService.deleteGroup(id);
 	}
-
-//	@RequestMapping(value = "/getUser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-//	public User getCountryById(@PathVariable("id") String id) {
-//		return groupService.getUser(id);
-//	}
-//
-//
-//	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT, headers = "Accept=application/json")
-//	public void updateUser(@RequestBody User user) {
-//		groupService.updateUser(user);
-//	}
-//
+	
+	@RequestMapping(value = "/getJoinedGroups/{userid}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public List<Integer> getAllJoinedGroups(@PathVariable("userid") String userId) {
+		List<Integer> groupList = groupService.getAllJoinedGroups(userId);
+		return groupList;
+	}
 
 }

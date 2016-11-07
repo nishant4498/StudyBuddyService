@@ -1,8 +1,10 @@
 package org.gis.studybuddy.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.gis.studybuddy.mapper.GroupMapper;
+import org.gis.studybuddy.mapper.IntegerMapper;
 import org.gis.studybuddy.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,12 +25,37 @@ public class GroupDAO {
 	
 	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
 		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		int count = 0;
 		if(maxCapacity != null){
 			query += " where capacity <=" + maxCapacity;
+			count++;
 		}
 		
 		if(subjectId != null){
-			query += " and subjectid =" + subjectId;
+			if(count > 0){
+				query += " and subjectid =" + subjectId;
+			}else{
+				query += "where subjectid =" + subjectId;
+			}
+			count++;
+		}
+		
+		if(startTimestamp != null){
+			if(count > 0){
+				query += " and starttime > (TIMESTAMP " + "\'" + new Timestamp(startTimestamp) + "\')";
+			}else{
+				query += " where starttime > (TIMESTAMP " + "\'" + new Timestamp(startTimestamp)  + "\')";
+			}
+			count++;
+		}
+		
+		if(endTimestamp != null){
+			if(count > 0){
+				query += " and endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
+			}else{
+				query += " where endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
+			}
+			count++;
 		}
 				
 		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
@@ -43,20 +70,40 @@ public class GroupDAO {
 	}
 	
 	public void deleteGroup(String id) {
-		String query = "delete from public.group where groupid = " + "\'" + id + "\'";
-		jdbcTemplate.execute(query);
+		String deleteGroupQuery = "delete from public.group where groupid = " + "\'" + id + "\'";
+		jdbcTemplate.execute(deleteGroupQuery);
+		
+		String deleteMembersQuery = "delete from public.groupmembers where groupid = " + "\'" + id + "\'";
+		jdbcTemplate.execute(deleteMembersQuery);
+		
 	}
 	
-
-//	public User getUser(String id) {
-//		String query = "select * from public.user where userid = " + "\'" + id + "\'";
-//		List<User> userList = jdbcTemplate.query(query, new UserMapper());
-//		return userList.get(0);
-//	}
-//
-//	public void updateUser(User user) {
-//		// TODO Not sure what needs to be updated for a user.
-//	}
-//
-
+	public void joinGroup(Integer groupId, String userId) {
+		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		query += " where groupid =" + groupId;	
+		
+		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
+		if(!groupList.isEmpty()){
+			Group grp = groupList.get(0);
+			int maxCap = grp.capacity;
+			int currCap = grp.numMembers;
+			//TODO Send an error message that either the group is empty.
+			if(maxCap == currCap){
+				return;
+			}
+			
+			String updateCapacityQuery = "update public.group set nummembers = " + (currCap + 1) + "where groupid = " + groupId;
+			jdbcTemplate.execute(updateCapacityQuery);
+			
+			String updateGroupInfoQuery = "insert into public.groupmembers (groupid, userid) values (?, ?)";
+			jdbcTemplate.update(updateGroupInfoQuery,groupId , userId);			
+		}
+		
+	}
+	
+	public List<Integer> getAllJoinedGroups(String userId) {
+		String query = "SELECT groupid FROM public.groupmembers where userid = " + "\'" + userId + "\'";
+		List<Integer> groupList = jdbcTemplate.query(query, new IntegerMapper());
+		return groupList;
+	}
 }
