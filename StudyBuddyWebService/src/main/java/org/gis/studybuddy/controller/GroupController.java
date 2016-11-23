@@ -34,6 +34,14 @@ public class GroupController {
 		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp);
 	}
 	
+	@RequestMapping(value = "/getKNearestGroups", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public List<Group> getKNNGroups(@RequestParam(value = "latitude", required = true) Double latitude,
+			@RequestParam(value = "longitude", required = true) Double longitude,
+			@RequestParam(value = "k", required = true) Integer k ) {
+		return groupService.getKNNGroups(latitude, longitude, k);
+	}
+	
 	@RequestMapping(value = "/createGroup", method = RequestMethod.POST, headers = "Accept=application/json")
 	public void createGroup(@RequestBody Group group) {
 		groupService.createGroup(group);

@@ -56,8 +56,15 @@ public class GroupDAO {
 				query += " where endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
 			}
 			count++;
-		}
+		}	
 				
+		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
+		return groupList;
+	}
+	
+	public List<Group> getKNNGroups(Double latitude, Double longitude ,Integer k){
+		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		query += "ORDER BY point <-> (ST_MakePoint(" + longitude + "," + latitude + ")::geometry) LIMIT " + k;		
 		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
 		return groupList;
 	}

@@ -21,7 +21,12 @@ public class GroupService {
 	@Transactional
 	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
 		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp);
-	}
+	}	
+
+	@Transactional
+	public List<Group> getKNNGroups(Double latitude, Double longitude ,Integer k) {
+		return groupDao.getKNNGroups(latitude, longitude, k);
+	}	
 	
 	@Transactional
 	public void createGroup(Group group) {
