@@ -30,16 +30,11 @@ public class GroupController {
 	public List<Group> searchGroups(@RequestParam(value = "maxCapacity", required = false) Integer maxCapacity,
 			@RequestParam(value = "subjectId", required = false) Integer subjectID,
 			@RequestParam(value = "startTimestamp", required = false) Long startTimestamp,
-			@RequestParam(value = "endTimestamp", required = false) Long endTimestamp) {
-		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp);
-	}
-	
-	@RequestMapping(value = "/getKNearestGroups", method = RequestMethod.GET, headers = "Accept=application/json")
-	@ResponseBody
-	public List<Group> getKNNGroups(@RequestParam(value = "latitude", required = true) Double latitude,
-			@RequestParam(value = "longitude", required = true) Double longitude,
-			@RequestParam(value = "k", required = true) Integer k ) {
-		return groupService.getKNNGroups(latitude, longitude, k);
+			@RequestParam(value = "endTimestamp", required = false) Long endTimestamp,
+			@RequestParam(value = "latitude", required = false) Double latitude,
+			@RequestParam(value = "longitude", required = false) Double longitude,
+			@RequestParam(value = "k", required = false) Integer k) {
+		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp, latitude, longitude, k);
 	}
 	
 	@RequestMapping(value = "/createGroup", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -53,9 +48,22 @@ public class GroupController {
 		groupService.joinGroup(groupId, userId);
 	}
 	
+	@RequestMapping(value = "/addFavourite", method = RequestMethod.GET, headers = "Accept=application/json")
+	public void addFavourite(@RequestParam(value = "groupId", required = false) Integer groupId,
+			@RequestParam(value = "userId", required = false) String userId) {
+		groupService.addFavourite(groupId, userId);
+	}
+	
 	@RequestMapping(value = "/deleteGroup/{groupid}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public void deleteGroup(@PathVariable("groupid") String id) {
 		groupService.deleteGroup(id);
+	}
+	
+	@RequestMapping(value = "/getFavouriteGroups/{userid}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public List<Integer> getAllFavouriteGroups(@PathVariable("userid") String userId) {
+		List<Integer> groupList = groupService.getAllFavouriteGroups(userId);
+		return groupList;
 	}
 	
 	@RequestMapping(value = "/getJoinedGroups/{userid}", method = RequestMethod.GET, headers = "Accept=application/json")
