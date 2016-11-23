@@ -23,7 +23,7 @@ public class GroupDAO {
 	}
 	
 	
-	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
+	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k) {
 		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
 		int count = 0;
 		if(maxCapacity != null){
@@ -56,15 +56,12 @@ public class GroupDAO {
 				query += " where endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
 			}
 			count++;
-		}	
+		}
+		
+		if (latitude != null) {
+			query += " ORDER BY point <-> (ST_MakePoint(" + longitude + "," + latitude + ")::geometry) LIMIT " + k;
+		}
 				
-		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
-		return groupList;
-	}
-	
-	public List<Group> getKNNGroups(Double latitude, Double longitude ,Integer k){
-		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
-		query += "ORDER BY point <-> (ST_MakePoint(" + longitude + "," + latitude + ")::geometry) LIMIT " + k;		
 		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
 		return groupList;
 	}
@@ -106,6 +103,17 @@ public class GroupDAO {
 			jdbcTemplate.update(updateGroupInfoQuery,groupId , userId);			
 		}
 		
+	}
+	
+	public void addFavourite(Integer groupId, String userId) {
+		String updateGroupInfoQuery = "insert into public.favourites (userid, groupid) values (?, ?)";
+		jdbcTemplate.update(updateGroupInfoQuery, userId, groupId);
+	}
+	
+	public List<Integer> getAllFavouriteGroups(String userId) {
+		String query = "SELECT groupid FROM public.favourites where userid = " + "\'" + userId + "\'";
+		List<Integer> groupList = jdbcTemplate.query(query, new IntegerMapper());
+		return groupList;
 	}
 	
 	public List<Integer> getAllJoinedGroups(String userId) {

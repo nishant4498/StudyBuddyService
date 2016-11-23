@@ -19,14 +19,9 @@ public class GroupService {
 	}
 	
 	@Transactional
-	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp) {
-		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp);
-	}	
-
-	@Transactional
-	public List<Group> getKNNGroups(Double latitude, Double longitude ,Integer k) {
-		return groupDao.getKNNGroups(latitude, longitude, k);
-	}	
+	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k) {
+		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp, latitude, longitude, k);
+	}
 	
 	@Transactional
 	public void createGroup(Group group) {
@@ -44,18 +39,18 @@ public class GroupService {
 	}
 	
 	@Transactional
+	public void addFavourite(Integer groupId, String userId) {
+		groupDao.addFavourite(groupId, userId);
+	}
+	
+	@Transactional
 	public List<Integer> getAllJoinedGroups(String userId) {
 		return groupDao.getAllJoinedGroups(userId);
 	}
-
 	
-	
-
-//
-//	@Transactional
-//	public void updateUser(User user) {
-//		groupDao.updateUser(user);
-//	}
-//
+	@Transactional
+	public List<Integer> getAllFavouriteGroups(String userId) {
+		return groupDao.getAllFavouriteGroups(userId);
+	}
 
 }
