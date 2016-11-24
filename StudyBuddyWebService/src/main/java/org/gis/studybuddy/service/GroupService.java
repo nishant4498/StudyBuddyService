@@ -49,6 +49,13 @@ public class GroupService {
 	}
 	
 	@Transactional
+	public List<Integer> getUpcomingGroup(String userId) {
+		return groupDao.getUpcomingGroup(userId);
+	}
+	
+	
+	
+	@Transactional
 	public List<Integer> getAllFavouriteGroups(String userId) {
 		return groupDao.getAllFavouriteGroups(userId);
 	}

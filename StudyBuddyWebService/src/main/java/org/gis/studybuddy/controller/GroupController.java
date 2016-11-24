@@ -73,5 +73,12 @@ public class GroupController {
 		List<Integer> groupList = groupService.getAllJoinedGroups(userId);
 		return groupList;
 	}
+	
+	@RequestMapping(value = "/getUpcomingGroup/{userid}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public List<Integer> getUpcomingGroup(@PathVariable("userid") String userId) {
+		List<Integer> groupList = groupService.getUpcomingGroup(userId);
+		return groupList;
+	}
 
 }

@@ -125,4 +125,10 @@ public class GroupDAO {
 		List<Integer> groupList = jdbcTemplate.query(query, new IntegerMapper());
 		return groupList;
 	}
+	
+	public List<Integer> getUpcomingGroup(String userId) {
+		String query = "SELECT * FROM public.group as a inner join public.groupmembers as b on a.groupid = b. groupid where b.userid= " + "\'" + userId + "\'" + " order by a.starttime asc limit 1";
+		List<Integer> groupList = jdbcTemplate.query(query, new IntegerMapper());
+		return groupList;
+	}
 }
