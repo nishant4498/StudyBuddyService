@@ -23,7 +23,7 @@ public class GroupDAO {
 	}
 	
 	
-	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k) {
+	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k, Integer range) {
 		String query = "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
 		int count = 0;
 		if(maxCapacity != null){
@@ -58,9 +58,13 @@ public class GroupDAO {
 			count++;
 		}
 		
-		if (latitude != null) {
+		if (k != null) {
 			query += " ORDER BY point <-> (ST_MakePoint(" + longitude + "," + latitude + ")::geometry) LIMIT " + k;
 		}
+		
+		if(range != null){
+			query += " where ST_DWithin(point, ST_MakePoint(" + longitude + "," + latitude + ")::geography," + range+ ")";
+		} 
 				
 		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
 		return groupList;

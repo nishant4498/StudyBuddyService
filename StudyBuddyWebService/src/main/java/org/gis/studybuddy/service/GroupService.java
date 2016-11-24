@@ -19,8 +19,8 @@ public class GroupService {
 	}
 	
 	@Transactional
-	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k) {
-		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp, latitude, longitude, k);
+	public List<Group> searchGroups(Integer maxCapacity, Integer subjectId ,Long startTimestamp,Long endTimestamp, Double latitude, Double longitude ,Integer k, Integer range) {
+		return groupDao.searchGroups(maxCapacity, subjectId , startTimestamp , endTimestamp, latitude, longitude, k, range);
 	}
 	
 	@Transactional

@@ -33,8 +33,9 @@ public class GroupController {
 			@RequestParam(value = "endTimestamp", required = false) Long endTimestamp,
 			@RequestParam(value = "latitude", required = false) Double latitude,
 			@RequestParam(value = "longitude", required = false) Double longitude,
-			@RequestParam(value = "k", required = false) Integer k) {
-		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp, latitude, longitude, k);
+			@RequestParam(value = "k", required = false) Integer k,
+			@RequestParam(value = "range", required = false) Integer range) {
+		return groupService.searchGroups(maxCapacity , subjectID , startTimestamp, endTimestamp, latitude, longitude, k,range);
 	}
 	
 	@RequestMapping(value = "/createGroup", method = RequestMethod.POST, headers = "Accept=application/json")
