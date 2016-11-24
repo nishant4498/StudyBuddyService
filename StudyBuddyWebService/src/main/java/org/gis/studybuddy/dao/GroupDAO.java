@@ -126,9 +126,10 @@ public class GroupDAO {
 		return groupList;
 	}
 	
-	public List<Integer> getUpcomingGroup(String userId) {
-		String query = "SELECT * FROM public.group as a inner join public.groupmembers as b on a.groupid = b. groupid where b.userid= " + "\'" + userId + "\'" + " order by a.starttime asc limit 1";
-		List<Integer> groupList = jdbcTemplate.query(query, new IntegerMapper());
+	public List<Group> getUpcomingGroup(String userId) {
+		String query = "SELECT a.groupid, \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+		query += " as a inner join public.groupmembers as b on a.groupid = b. groupid where b.userid= " + "\'" + userId + "\'" + " order by a.starttime asc limit 1";
+		List<Group> groupList = jdbcTemplate.query(query, new GroupMapper());
 		return groupList;
 	}
 }

@@ -49,7 +49,7 @@ public class GroupService {
 	}
 	
 	@Transactional
-	public List<Integer> getUpcomingGroup(String userId) {
+	public List<Group> getUpcomingGroup(String userId) {
 		return groupDao.getUpcomingGroup(userId);
 	}
 	
