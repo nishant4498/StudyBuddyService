@@ -42,18 +42,20 @@ public class GroupDAO {
 		
 		if(startTimestamp != null){
 			if(count > 0){
-				query += " and starttime > (TIMESTAMP " + "\'" + new Timestamp(startTimestamp) + "\')";
+				query += " and starttime >= (TIMESTAMP " + "\'" + new Timestamp(startTimestamp) + "\')";
 			}else{
-				query += " where starttime > (TIMESTAMP " + "\'" + new Timestamp(startTimestamp)  + "\')";
+				query += " where starttime >= (TIMESTAMP " + "\'" + new Timestamp(startTimestamp)  + "\')";
 			}
 			count++;
 		}
 		
 		if(endTimestamp != null){
 			if(count > 0){
-				query += " and endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
+				query += "INTERSECT ";
+				query += "SELECT \"groupid\", \"subjectid\", \"groupname\", \"admin\", \"starttime\", \"endtime\", \"capacity\", \"nummembers\", \"locationname\",\"topic\", ST_Y(\"point\"::geometry) as latCoord, ST_X(\"point\"::geometry) as longCoord FROM public.\"group\"";
+				query += "where endtime <= (TIMESTAMP " + "\'" + new Timestamp(endTimestamp) + "\')";
 			}else{
-				query += " where endtime < " + "\"" + new Timestamp(endTimestamp) + "\"";
+				query += " where endtime <= (TIMESTAMP " + "\'" + new Timestamp(endTimestamp)  + "\')";
 			}
 			count++;
 		}
